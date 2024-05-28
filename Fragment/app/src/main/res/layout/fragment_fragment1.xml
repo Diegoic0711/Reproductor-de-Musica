@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/ed1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/ed2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/ed2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btn"
+        app:layout_constraintStart_toStartOf="@+id/ed1"
+        app:layout_constraintTop_toBottomOf="@+id/ed1" />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:text="Sumar"
+        app:layout_constraintBottom_toTopOf="@+id/txt1"
+        app:layout_constraintStart_toStartOf="@+id/txt1"
+        app:layout_constraintTop_toBottomOf="@+id/ed2" />
+
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="109dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="457dp"
+        android:text="La Suma Es:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn" />
+</androidx.constraintlayout.widget.ConstraintLayout>

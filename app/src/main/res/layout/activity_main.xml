@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    tools:context=".MainActivity">
+
+    <!-- The pause and play button is included here -->
+    <!-- Here is the image of the cover -->
+    <!-- Here we have the button to skip to the next song -->
+
+    <Button
+        android:id="@+id/play_pause"
+        android:layout_width="60dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="212dp"
+        android:background="@drawable/play_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/skip_next"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toEndOf="@+id/skip_previous"
+        app:layout_constraintTop_toBottomOf="@+id/image_view" />
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="311dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginBottom="57dp"
+        app:layout_constraintBottom_toTopOf="@+id/play_pause"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/caratula"
+        tools:ignore="MissingConstraints" />
+
+    <!-- Here we have the button that jumps to the previous song -->
+    <!-- Here we have the button that repeats the song -->
+
+    <!-- Here we have the button that stops the song -->
+
+    <Button
+        android:id="@+id/skip_next"
+        android:layout_width="68dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="468dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="43dp"
+        android:background="@drawable/skip_next"
+        android:onClick="Siguiente"
+        app:layout_constraintBottom_toTopOf="@+id/repeat_one"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/skip_previous"
+        android:layout_width="68dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="212dp"
+        android:background="@drawable/skip_previous"
+        android:onClick="Anterior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/repeat_one"
+        android:layout_width="68dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="118dp"
+        android:background="@drawable/repeat"
+        android:onClick="Repetir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skip_next"
+        app:layout_constraintVertical_bias="0.267" />
+
+    <Button
+        android:id="@+id/stop_circle"
+        android:layout_width="68dp"
+        android:layout_height="51dp"
+        android:background="@drawable/stop_circle"
+        android:onClick="Stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/repeat_one"
+        app:layout_constraintHorizontal_bias="0.777"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/play_pause"
+        app:layout_constraintVertical_bias="0.267" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
