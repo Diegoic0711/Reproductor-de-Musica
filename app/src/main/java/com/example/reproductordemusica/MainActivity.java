@@ -2,9 +2,11 @@ package com.example.reproductordemusica;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
     ImageView iv; //Variable for song images
     int repetir = 2, posicion = 0; //used for repeat interactions
     MediaPlayer vectormp [] = new MediaPlayer[3]; //Vector used to manage songs
+    SeekBar seekBar; //Variable to manage seek bar
+
+    Runnable runnable;
+    Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,28 @@ public class MainActivity extends AppCompatActivity {
         mp=MediaPlayer.create(this,R.raw.manifiesto);//search for the song to play
         repeat_one = (Button)findViewById(R.id.repeat_one);
         iv = (ImageView)findViewById(R.id.image_view);
+
+        seekBar = findViewById(R.id.seekBar); //Search for seekbar
+
+        handler=new Handler();
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
 
         vectormp[0] = MediaPlayer.create(this, R.raw.manifiesto);
         vectormp[1] = MediaPlayer.create(this, R.raw.mas_de_lo_mismo);
@@ -52,25 +80,13 @@ public class MainActivity extends AppCompatActivity {
                     vectormp[posicion].start();
                     play_pause.setBackgroundResource(R.drawable.pause_circle);
                     Toast.makeText(MainActivity.this,"Play",Toast.LENGTH_SHORT).show();
+                    seekBar.setMax(mp.getDuration());
+                    updateSeekbar();
                 }
             }
         });
     }
-    //Method to Stop Playback
-    public void Stop(View view){
-        if (vectormp[posicion] != null){
-            vectormp[posicion].stop();
 
-            vectormp[0] = MediaPlayer.create(this, R.raw.manifiesto);
-            vectormp[1] = MediaPlayer.create(this, R.raw.mas_de_lo_mismo);
-            vectormp[2] = MediaPlayer.create(this, R.raw.tamo_es_pa_gozar);
-            posicion = 0;
-            play_pause.setBackgroundResource(R.drawable.fondo);
-            iv.setImageResource(R.drawable.caratula);
-            Toast.makeText(this, "Stop", Toast.LENGTH_SHORT).show();
-            play_pause.setBackgroundResource((R.drawable.play_circle));
-        }
-    }
     //repeat a track method
     public void Repetir (View view){
         if(repetir == 1){
@@ -148,6 +164,19 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "No hay mas canciones", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void updateSeekbar(){
+        int currentPosition = mp.getCurrentPosition();
+        seekBar.setProgress(currentPosition);
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                updateSeekbar();
+            }
+        };
+        handler.postDelayed(runnable,1000);
+
     }
 
 }
