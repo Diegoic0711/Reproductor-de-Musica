@@ -65,6 +65,7 @@
         android:layout_marginTop="42dp"
         android:layout_marginEnd="33dp"
         android:background="@drawable/play_circle"
+        android:onClick="PlayPause"
         app:layout_constraintEnd_toStartOf="@+id/skip_next"
         app:layout_constraintStart_toEndOf="@+id/skip_previous"
         app:layout_constraintTop_toBottomOf="@+id/seekBar" />
@@ -82,16 +83,15 @@
 
     <Button
         android:id="@+id/repeat_one"
-        android:layout_width="33dp"
-        android:layout_height="20dp"
+        android:layout_width="49dp"
+        android:layout_height="41dp"
         android:layout_marginEnd="64dp"
-        android:layout_marginBottom="148dp"
+        android:layout_marginBottom="184dp"
         android:background="@drawable/repeat"
         android:onClick="Repetir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/skip_next"
-        app:layout_constraintTop_toBottomOf="@+id/skip_previous" />
+        app:layout_constraintStart_toEndOf="@+id/skip_next" />
 
     <Button
         android:id="@+id/skip_previous"

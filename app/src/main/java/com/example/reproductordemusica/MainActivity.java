@@ -16,16 +16,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-
     Button play_pause, repeat_one; //Variable for pause and repeat buttons
     MediaPlayer mp;//Variable for music
     ImageView iv; //Variable for song images
     int repetir = 2, posicion = 0; //used for repeat interactions
     MediaPlayer vectormp [] = new MediaPlayer[3]; //Vector used to manage songs
     SeekBar seekBar; //Variable to manage seek bar
-
-    Runnable runnable;
-    Handler handler;
+    Runnable runnable; // Use to seekbar
+    Handler handler;// Use to seekbar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,57 +34,69 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         play_pause=(Button)findViewById(R.id.play_pause);//look for the created button
         mp=MediaPlayer.create(this,R.raw.manifiesto);//search for the song to play
         repeat_one = (Button)findViewById(R.id.repeat_one);
         iv = (ImageView)findViewById(R.id.image_view);
-
         seekBar = findViewById(R.id.seekBar); //Search for seekbar
-
         handler=new Handler();
-
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
+                if(b){
+                    mp.seekTo(i);
+                }
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
-
-
-        vectormp[0] = MediaPlayer.create(this, R.raw.manifiesto);
-        vectormp[1] = MediaPlayer.create(this, R.raw.mas_de_lo_mismo);
-        vectormp[2] = MediaPlayer.create(this, R.raw.tamo_es_pa_gozar);
-
-        play_pause.setOnClickListener(new View.OnClickListener() {//initialize playback
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onClick(View v) {
-                //This helps us change the button from play to pause
-                if(vectormp[posicion].isPlaying()){
-                    mp.pause();
-                    play_pause.setBackgroundResource((R.drawable.play_circle));
-                    Toast.makeText(MainActivity.this,"Pausa",Toast.LENGTH_SHORT).show();
-                }else{//esto nos ayuda a cambiar el boton de pausa a play
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mediaPlayer.seekTo(0);
+                if(posicion < vectormp.length -1){
+                    posicion++;
                     vectormp[posicion].start();
-                    play_pause.setBackgroundResource(R.drawable.pause_circle);
-                    Toast.makeText(MainActivity.this,"Play",Toast.LENGTH_SHORT).show();
-                    seekBar.setMax(mp.getDuration());
                     updateSeekbar();
+                    if (posicion == 0){
+                        iv.setImageResource(R.drawable.caratula);
+                    }else if (posicion == 1){
+                        iv.setImageResource(R.drawable.portada_1);
+                    }else if (posicion == 2){
+                        iv.setImageResource(R.drawable.portada_2);
+                    }
+                }else {
+                    posicion = 0;
+                    vectormp[posicion].start();
+                    updateSeekbar();
+                    iv.setImageResource(R.drawable.caratula);
                 }
             }
         });
+        vectormp[0] = MediaPlayer.create(this, R.raw.manifiesto);
+        vectormp[1] = MediaPlayer.create(this, R.raw.mas_de_lo_mismo);
+        vectormp[2] = MediaPlayer.create(this, R.raw.tamo_es_pa_gozar);
+        updateSeekbar();
     }
-
+    //Play&Pause Method
+    public void PlayPause(View view){
+        if(vectormp[posicion].isPlaying()){
+            //This helps us change the button from play to pause
+            vectormp[posicion].pause();
+            play_pause.setBackgroundResource(R.drawable.play_circle);
+            Toast.makeText(this, "Pause", Toast.LENGTH_SHORT).show();
+        } else {
+            //This helps us change the button from pause to play
+           vectormp[posicion].start();
+           play_pause.setBackgroundResource(R.drawable.pause_circle);
+            Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show();
+            updateSeekbar();
+        }
+    }
     //repeat a track method
     public void Repetir (View view){
         if(repetir == 1){
@@ -127,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
                     iv.setImageResource(R.drawable.portada_2);
                 }
             }
-
         }else {
             Toast.makeText(this, "No hay mas canciones", Toast.LENGTH_SHORT).show();
         }
@@ -135,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
     //Method to return to the previous song
     public  void Anterior(View view){
         if (posicion >= 1){
-
             if (vectormp[posicion].isPlaying()) {
                 vectormp[posicion].stop();
                 vectormp[0] = MediaPlayer.create(this, R.raw.manifiesto);
@@ -149,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
                 } else if (posicion == 2) {
                     iv.setImageResource(R.drawable.portada_2);
                 }
-
                 vectormp[posicion].start();
             }else {
                 posicion--;
@@ -165,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "No hay mas canciones", Toast.LENGTH_SHORT).show();
         }
     }
-
     public void updateSeekbar(){
         int currentPosition = mp.getCurrentPosition();
         seekBar.setProgress(currentPosition);
@@ -176,7 +182,5 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable,1000);
-
     }
-
 }
