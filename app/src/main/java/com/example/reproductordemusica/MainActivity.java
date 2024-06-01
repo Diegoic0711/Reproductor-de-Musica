@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -16,7 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    Button play_pause, repeat_one; //Variable for pause and repeat buttons
+    ImageButton play_pause, repeat_one; //Variable for pause and repeat buttons
     MediaPlayer mp;//Variable for music
     ImageView iv; //Variable for song images
     int repetir = 2, posicion = 0; //used for repeat interactions
@@ -34,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        play_pause=(Button)findViewById(R.id.play_pause);//look for the created button
+        play_pause=(ImageButton)findViewById(R.id.play_pause);//look for the created button
         mp=MediaPlayer.create(this,R.raw.manifiesto);//search for the song to play
-        repeat_one = (Button)findViewById(R.id.repeat_one);
+        repeat_one = (ImageButton)findViewById(R.id.repeat_one);
         iv = (ImageView)findViewById(R.id.image_view);
         seekBar = findViewById(R.id.seekBar); //Search for seekbar
         handler=new Handler();

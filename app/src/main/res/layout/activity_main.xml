@@ -34,16 +34,21 @@
 
 
     <LinearLayout
-        android:layout_width="385dp"
-        android:layout_height="193dp"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="360dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_view"
+        app:layout_constraintVertical_bias="0.1">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="145dp"
             android:layout_height="27dp"
+            android:layout_marginStart="44dp"
             android:background="#00FFFFFF"
             android:text="Test Track 1"
             android:textColor="#FBFBFB"
@@ -55,6 +60,7 @@
             android:layout_width="115dp"
             android:layout_height="24dp"
             android:layout_marginEnd="18dp"
+            android:layout_marginStart="44dp"
             android:layout_marginBottom="10dp"
             android:text="Diego Caballero"
             android:textColor="#9AF1EEEE" />
@@ -63,9 +69,9 @@
             android:id="@+id/seekBar"
             android:layout_width="361dp"
             android:layout_height="23dp"
-            android:layout_marginStart="7dp"
+            android:layout_marginStart="26dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -79,13 +85,15 @@
             android:layout_height="52dp"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/skip_previous"
-                android:layout_width="40dp"
-                android:layout_height="39dp"
-                android:layout_marginStart="107dp"
+                android:layout_width="60dp"
+                android:layout_height="51dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginEnd="15dp"
+                android:backgroundTint="@color/white"
                 android:background="@drawable/skip_previous"
+                android:contentDescription="Anterior"
                 android:onClick="Anterior"
                 app:layout_constraintBottom_toTopOf="@+id/repeat_one"
                 app:layout_constraintEnd_toStartOf="@+id/play_pause"
@@ -96,33 +104,37 @@
                 android:id="@+id/play_pause"
                 android:layout_width="60dp"
                 android:layout_height="51dp"
-                android:layout_marginEnd="0dp"
+                android:backgroundTint="@color/white"
                 android:background="@drawable/play_circle"
+                android:contentDescription="Play"
                 android:onClick="PlayPause"
                 app:layout_constraintEnd_toStartOf="@+id/skip_next"
                 app:layout_constraintStart_toEndOf="@+id/skip_previous"
                 app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/skip_next"
-                android:layout_width="34dp"
-                android:layout_height="39dp"
+                android:layout_width="60dp"
+                android:layout_height="51dp"
                 android:layout_marginStart="15dp"
                 android:background="@drawable/skip_next"
+                android:backgroundTint="@color/white"
+                android:contentDescription="Next"
                 android:onClick="Siguiente"
                 app:layout_constraintBaseline_toBaselineOf="@+id/play_pause"
                 app:layout_constraintEnd_toStartOf="@+id/repeat_one"
                 app:layout_constraintStart_toEndOf="@+id/play_pause" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/repeat_one"
-                android:layout_width="49dp"
-                android:layout_height="41dp"
-                android:layout_marginStart="30dp"
+                android:layout_width="51dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="64dp"
-                android:layout_marginBottom="184dp"
                 android:background="@drawable/repeat"
                 android:backgroundTint="@color/white"
+                android:contentDescription="Shuffle"
                 android:onClick="Repetir"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
