@@ -12,25 +12,41 @@
     <!-- Here is the image of the cover -->
     <!-- Here we have the button to skip to the next song -->
 
+    <!-- Here we have the button that jumps to the previous song -->
+    <!-- Here we have the button that repeats the song -->
+
+    <!-- Here we have the button that stops the song -->
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="145dp"
+        android:layout_height="27dp"
+        android:background="#00FFFFFF"
+        android:text="Test Track 1"
+        android:textColor="#FBFBFB"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/image_view"
         android:layout_width="322dp"
         android:layout_height="305dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="57dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="14dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.089"
         app:srcCompat="@drawable/caratula"
         tools:ignore="MissingConstraints" />
-
-    <!-- Here we have the button that jumps to the previous song -->
-    <!-- Here we have the button that repeats the song -->
-
-    <!-- Here we have the button that stops the song -->
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -39,24 +55,26 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="47dp"
-        app:layout_constraintBottom_toTopOf="@+id/skip_previous"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.632" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="115dp"
         android:layout_height="24dp"
-        android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp"
-        android:layout_marginBottom="46dp"
         android:text="Diego Caballero"
         android:textColor="#9AF1EEEE"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
-        app:layout_constraintEnd_toStartOf="@+id/play_pause"
-        app:layout_constraintStart_toStartOf="@+id/seekBar"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.536" />
 
     <Button
         android:id="@+id/play_pause"
@@ -88,6 +106,7 @@
         android:layout_marginEnd="64dp"
         android:layout_marginBottom="184dp"
         android:background="@drawable/repeat"
+        android:backgroundTint="@color/white"
         android:onClick="Repetir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -106,17 +125,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="145dp"
-        android:layout_height="27dp"
-        android:background="#00FFFFFF"
-        android:text="Test Track 1"
-        android:textColor="#FBFBFB"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/image_view" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
