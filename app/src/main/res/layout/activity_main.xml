@@ -90,10 +90,11 @@
 
             <ImageButton
                 android:id="@+id/skip_previous"
-                android:layout_width="60dp"
-                android:layout_height="51dp"
+                android:layout_width="45dp"
+                android:layout_height="42dp"
                 android:layout_marginStart="80dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/skip_previous"
                 android:backgroundTint="@color/white"
                 android:contentDescription="Anterior"
@@ -101,37 +102,42 @@
                 app:layout_constraintBottom_toTopOf="@+id/repeat_one"
                 app:layout_constraintEnd_toStartOf="@+id/play_pause"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+                app:layout_constraintTop_toBottomOf="@+id/seekBar"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <ImageButton
                 android:id="@+id/play_pause"
-                android:layout_width="60dp"
-                android:layout_height="51dp"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="2dp"
                 android:background="@drawable/play_circle"
                 android:backgroundTint="@color/white"
                 android:contentDescription="Play"
                 android:onClick="PlayPause"
                 app:layout_constraintEnd_toStartOf="@+id/skip_next"
                 app:layout_constraintStart_toEndOf="@+id/skip_previous"
-                app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+                app:layout_constraintTop_toBottomOf="@+id/seekBar"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <ImageButton
                 android:id="@+id/skip_next"
-                android:layout_width="60dp"
-                android:layout_height="51dp"
-                android:layout_marginStart="15dp"
+                android:layout_width="45dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="6dp"
                 android:background="@drawable/skip_next"
                 android:backgroundTint="@color/white"
                 android:contentDescription="Next"
                 android:onClick="Siguiente"
                 app:layout_constraintBaseline_toBaselineOf="@+id/play_pause"
                 app:layout_constraintEnd_toStartOf="@+id/repeat_one"
-                app:layout_constraintStart_toEndOf="@+id/play_pause" />
+                app:layout_constraintStart_toEndOf="@+id/play_pause"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <ImageButton
                 android:id="@+id/repeat_one"
                 android:layout_width="51dp"
-                android:layout_height="55dp"
+                android:layout_height="46dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="64dp"
@@ -141,7 +147,8 @@
                 android:onClick="Repetir"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/skip_next" />
+                app:layout_constraintStart_toEndOf="@+id/skip_next"
+                tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>
 
