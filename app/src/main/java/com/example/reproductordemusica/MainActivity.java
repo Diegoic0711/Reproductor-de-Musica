@@ -1,13 +1,16 @@
 package com.example.reproductordemusica;
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -30,7 +33,10 @@ public class MainActivity extends AppCompatActivity {
     Runnable runnable; // Runnable para actualizar el SeekBar
     Handler handler; // Handler para gestionar las actualizaciones del SeekBar
     View mainLayout; // Vista principal para cambiar dinámicamente el fondo
+    TextView song, artist;
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         iv = findViewById(R.id.image_view); // ImageView para la carátula del álbum
         seekBar = findViewById(R.id.seekBar); // SeekBar para la posición de reproducción
         handler = new Handler();
+        song = findViewById(R.id.song); //Textview del nombre de la pista o canción
+        artist = findViewById(R.id.artist); //Textview del nombre del artista
 
         // Inicializar los reproductores de medios
         initializeMediaPlayers();
@@ -174,21 +182,30 @@ public class MainActivity extends AppCompatActivity {
         vectormp[2] = MediaPlayer.create(this, R.raw.tamo_es_pa_gozar);
     }
 
+
     // Actualizar los componentes de la UI en función de la pista actual
     private void updateUI() {
         int imageResId;
         switch (posicion) {
             case 0:
                 imageResId = R.drawable.caratula;
+                song.setText("Test Track 1");
+                artist.setText("Diego Caballero");
                 break;
             case 1:
                 imageResId = R.drawable.portada_1;
+                song.setText("Test Track 2");
+                artist.setText("Diego Caballero y alguien más");
                 break;
             case 2:
                 imageResId = R.drawable.portada_2;
+                song.setText("Test Track 3");
+                artist.setText("Diego Caballero y sus colegas");
                 break;
             default:
                 imageResId = R.drawable.caratula;
+                song.setText("Test Track DEFAULT");
+                artist.setText("Diego Caballero DEFAULT");
                 break;
         }
         iv.setImageResource(imageResId);

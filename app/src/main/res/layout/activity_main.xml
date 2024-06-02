@@ -48,7 +48,7 @@
             tools:layout_editor_absoluteY="64dp" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/song"
             android:layout_width="124dp"
             android:layout_height="30dp"
             android:layout_marginStart="150dp"
@@ -59,7 +59,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/artist"
             android:layout_width="115dp"
             android:layout_height="24dp"
             android:layout_marginStart="150dp"
