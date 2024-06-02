@@ -1,5 +1,4 @@
 package com.example.reproductordemusica;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -59,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         setupSeekBar();
         // Configurar el listener de finalización del MediaPlayer
         setupMediaCompletionListener();
+
+        // Configurar el fondo degradado inicial
+        updateBackgroundColor(R.drawable.caratula); // Usa la carátula inicial como referencia
     }
 
     // Inicializar las instancias de MediaPlayer con los recursos de audio
@@ -193,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
         updateBackgroundColor(imageResId);
     }
 
+
     // Actualizar el color de fondo basado en la carátula del álbum
     private void updateBackgroundColor(int imageResId) {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imageResId);
@@ -213,6 +216,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
     // Oscurecer un color reduciendo su brillo
     private int darkenColor(int color) {
         float[] hsv = new float[3];
@@ -221,11 +226,13 @@ public class MainActivity extends AppCompatActivity {
         return Color.HSVToColor(hsv);
     }
 
+
     // Verificar si un color es claro o oscuro
     private boolean isColorLight(int color) {
         double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
         return darkness < 0.5;
     }
+
 
     // Actualizar el SeekBar periódicamente para reflejar la posición de reproducción
     public void updateSeekbar() {
