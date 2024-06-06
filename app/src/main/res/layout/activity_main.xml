@@ -34,6 +34,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.353">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="322dp"
@@ -46,7 +50,12 @@
             android:src="@drawable/caratula"
             tools:layout_editor_absoluteX="44dp"
             tools:layout_editor_absoluteY="64dp" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
         <TextView
             android:id="@+id/song"
             android:layout_width="124dp"
@@ -64,24 +73,46 @@
             android:layout_height="24dp"
             android:layout_marginStart="150dp"
             android:layout_marginEnd="18dp"
-            android:layout_marginBottom="30dp"
             android:text="Diego Caballero"
             android:textColor="#9AF1EEEE" />
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="361dp"
-            android:layout_height="23dp"
-            android:layout_marginStart="26dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="24dp"
-            style="@style/CustomSeekBar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.632" />
+    </LinearLayout>
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="24dp">
+
+    <TextView
+        android:id="@+id/tiempoTranscurrido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0:00"
+        android:textColor="@android:color/white" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="350dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="20dp"
+        style="@style/CustomSeekBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.632" />
+    <TextView
+        android:id="@+id/tiempoRestante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="3:45"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>
+
 
 
         <LinearLayout
