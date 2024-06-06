@@ -62,7 +62,7 @@
             android:layout_height="30dp"
             android:layout_marginStart="150dp"
             android:background="#00FFFFFF"
-            android:text="Test Track 1"
+            android:text="Manifiesto"
             android:textColor="#FBFBFB"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -73,7 +73,7 @@
             android:layout_height="24dp"
             android:layout_marginStart="150dp"
             android:layout_marginEnd="18dp"
-            android:text="Diego Caballero"
+            android:text="La Scene"
             android:textColor="#9AF1EEEE" />
 
     </LinearLayout>
