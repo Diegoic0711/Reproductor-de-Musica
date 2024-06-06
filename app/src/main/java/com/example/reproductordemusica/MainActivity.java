@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     Handler handler; // Handler para gestionar las actualizaciones del SeekBar
     View mainLayout; // Vista principal para cambiar dinámicamente el fondo
     TextView song, artist;
+    TextView tiempoTranscurridoTextView;
+    TextView tiempoRestanteTextView;
 
 
     @SuppressLint("MissingInflatedId")
@@ -59,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
         handler = new Handler();
         song = findViewById(R.id.song); //Textview del nombre de la pista o canción
         artist = findViewById(R.id.artist); //Textview del nombre del artista
+        tiempoTranscurridoTextView = findViewById(R.id.tiempoTranscurrido);
+        tiempoRestanteTextView = findViewById(R.id.tiempoRestante);
+
 
         // Inicializar los reproductores de medios
         initializeMediaPlayers();
@@ -258,10 +263,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 seekBar.setProgress(vectormp[posicion].getCurrentPosition());
+                actualizarTiempo(); // Llama al método para actualizar los TextViews
                 handler.postDelayed(this, 1000);
             }
         };
         handler.postDelayed(runnable, 1000);
+    }
+    // Método para formatear el tiempo en minutos y segundos
+    private String formatearTiempo(int segundos) {
+        int minutos = segundos / 60;
+        int segundosRestantes = segundos % 60;
+        return String.format("%d:%02d", minutos, segundosRestantes);
+    }
+
+    // Método para actualizar los TextViews con el tiempo transcurrido y restante
+    private void actualizarTiempo() {
+        int duracionTotal = vectormp[posicion].getDuration() / 1000;
+        int posicionActual = vectormp[posicion].getCurrentPosition() / 1000;
+
+        tiempoTranscurridoTextView.setText(formatearTiempo(posicionActual));
+        tiempoRestanteTextView.setText(String.format("%s", formatearTiempo(duracionTotal - posicionActual)));
     }
 
     // Liberar los recursos del MediaPlayer cuando la actividad es destruida
