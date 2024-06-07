@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     TextView song, artist;
     TextView tiempoTranscurridoTextView;
     TextView tiempoRestanteTextView;
+    private final String[] audioNames = {"manifiesto", "mas_de_lo_mismo", "tamo_es_pa_gozar"};
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -266,5 +269,25 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.release();
             }
         }
+    }
+    public void ShowAudioList(View view) {
+         // Crear un diálogo AlertDialog con ListView
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Lista de Audios");
+        builder.setItems(audioNames, (dialog, which) -> {
+            // Actualiza la posición actual
+            if (which != posicion) { // Solo si la selección es diferente a la posición actual
+                vectormp[posicion].stop();
+                posicion = which;
+                // Reproduce la pista seleccionada
+                vectormp[posicion].start();
+                updateSeekbar();
+            }
+            // Actualiza la interfaz de usuario independientemente de si se selecciona o no una nueva canción
+            updateUI();
+        });
+        builder.setNegativeButton("Cancelar", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
