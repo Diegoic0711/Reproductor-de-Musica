@@ -180,6 +180,19 @@
 
 
     </LinearLayout>
+    <ImageButton
+        android:id="@+id/btn_show_list"
+        android:layout_width="42dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="55dp"
+        android:background="@drawable/music_album"
+        android:backgroundTint="@color/white"
+        android:onClick="ShowAudioList"
+        android:text="Mostrar Lista de Audios"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
