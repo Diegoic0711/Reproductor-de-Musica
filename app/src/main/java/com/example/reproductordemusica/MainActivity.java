@@ -24,16 +24,16 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.palette.graphics.Palette;
 
 public class MainActivity extends AppCompatActivity {
-    // Componentes de la UI
-    ImageButton play_pause, repeat_one; // Botones para reproducir/pausar y repetir
-    MediaPlayer mp; // Instancia de MediaPlayer para manejar la reproducción de música
-    ImageView iv; // ImageView para mostrar la carátula del álbum
-    int repetir = 2, posicion = 0; // Variables de control para la repetición y la posición de la pista
-    MediaPlayer vectormp[] = new MediaPlayer[3]; // Array de instancias de MediaPlayer para múltiples pistas
-    SeekBar seekBar; // SeekBar para mostrar y controlar la posición de reproducción ...
-    Runnable runnable; // Runnable para actualizar el SeekBar ...
-    Handler handler; // Handler para gestionar las actualizaciones del SeekBar ...
-    View mainLayout; // Vista principal para cambiar dinámicamente el fondo ... Main view to change background dinamic
+    // Componentes de la UI ... UI components
+    ImageButton play_pause, repeat_one; // Botones para reproducir/pausar y repetir ... Buttoms for play/pause and repeat
+    MediaPlayer mp; // Instancia de MediaPlayer para manejar la reproducción de música ... Instance the MediaPlayer to manage the music player
+    ImageView iv; // ImageView para mostrar la carátula del álbum ... ImageView to show the album cover
+    int repetir = 2, posicion = 0; // Variables de control para la repetición y la posición de la pista ... Control variables for the repetition and position of song
+    MediaPlayer vectormp[] = new MediaPlayer[3]; // Array de instancias de MediaPlayer para múltiples pistas ... instance array of MediaPlayer for multiple songs
+    SeekBar seekBar; // SeekBar para mostrar y controlar la posición de reproducción ... SeekBar to show and control the reproduction position
+    Runnable runnable; // Runnable para actualizar el SeekBar ... Runnable for updating the Seekbar
+    Handler handler; // Handler para gestionar las actualizaciones del SeekBar ... Handler for manage the updates of the seekbar
+    View mainLayout; // Vista principal para cambiar dinámicamente el fondo ... Main view to change a dinamic background
     TextView song, artist;
     TextView tiempoTranscurridoTextView;
     TextView tiempoRestanteTextView;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        // Ajustar la UI para mostrar en pantalla completa ... Ajust the UI the show it FullScreen
+        // Ajustar la UI para mostrar en pantalla completa ... Adjust the UI to show it FullScreen
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         play_pause = findViewById(R.id.play_pause); // Botón de reproducir/pausar ...  Play/Pause Button
         repeat_one = findViewById(R.id.repeat_one); // Botón de repetir ... Repit Button
         iv = findViewById(R.id.image_view); // ImageView para la carátula del álbum ... Album cover ImageView
-        seekBar = findViewById(R.id.seekBar); // SeekBar para la posición de reproducción ...
+        seekBar = findViewById(R.id.seekBar); // SeekBar para la posición de reproducción ... SeekBar for the reproduction position
         handler = new Handler();
         song = findViewById(R.id.song); //Textview del nombre de la pista o canción ... Name of the song TextView
         artist = findViewById(R.id.artist); //Textview del nombre del artista ...  Artist name TextView
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         setupSeekBar();
         // Configurar el listener de finalización del MediaPlayer ... config finalization listener of the MediaPlayer
         setupMediaCompletionListener();
-        // Configurar el fondo degradado inicial ...
+        // Configurar el fondo degradado inicial ... config initial gradient background
         updateBackgroundColor(R.drawable.caratula); // Usa la carátula inicial como referencia ... Use initial cover as reference
     }
     // Inicializar las instancias de MediaPlayer con los recursos de audio ...  Initialize the MediaPlayer instance of Audio resorces
@@ -211,10 +211,10 @@ public class MainActivity extends AppCompatActivity {
                 int defaultColor = 0x000000; // Color por defecto en caso de que la paleta falle ...  Default colour in case the pallete fails
                 int dominantColor = palette.getDominantColor(defaultColor);
                 if (isColorLight(dominantColor)) {
-                    dominantColor = palette.getVibrantColor(defaultColor); // Usar un color vibrante si el dominante es muy claro ...  Uses a vibrant colour if the dominant is too ()
+                    dominantColor = palette.getVibrantColor(defaultColor); // Usar un color vibrante si el dominante es muy claro ...  Uses a vibrant colour if the dominant is too light
                 }
                 if (dominantColor == defaultColor) {
-                    dominantColor = palette.getMutedColor(defaultColor); // Usar un color apagado si no hay color vibrante disponible ... Uses a off colour if there`s not available colour
+                    dominantColor = palette.getMutedColor(defaultColor); // Usar un color apagado si no hay color vibrante disponible ... Uses a off colour if there`s not available colour vibrant
                 }
                 int darkenedColor = darkenColor(dominantColor); // Oscurecer el color dominante ...  Darkest the dominant colour
                 GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{darkenedColor, dominantColor});
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
         hsv[2] *= 20f; // Reducir el brillo para oscurecer el color ...  Reduce brightness of the colour
         return Color.HSVToColor(hsv);
     }
-    // Verificar si un color es claro o oscuro
+    // Verificar si un color es claro o oscuro ... Verifice if the colour is light or dark
     private boolean isColorLight(int color) {
         double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
         return darkness < 0.5;
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         return String.format("%d:%02d", minutos, segundosRestantes);
     }
 
-    // Método para actualizar los TextViews con el tiempo transcurrido y restante ... Method to Update the TextViews with the () and remaining time
+    // Método para actualizar los TextViews con el tiempo transcurrido y restante ... Method to Update the TextViews with the elapsed and remaining time
     private void actualizarTiempo() {
         int duracionTotal = vectormp[posicion].getDuration() / 1000;
         int posicionActual = vectormp[posicion].getCurrentPosition() / 1000;
