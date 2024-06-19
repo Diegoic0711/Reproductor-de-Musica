@@ -34,49 +34,50 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.353">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="322dp"
-            android:layout_height="305dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="51dp"
-            android:background="@drawable/circle"
-            android:clipToOutline="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/caratula"
-            tools:layout_editor_absoluteX="44dp"
-            tools:layout_editor_absoluteY="64dp" />
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        <TextView
-            android:id="@+id/song"
-            android:layout_width="124dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="150dp"
-            android:background="#00FFFFFF"
-            android:text="Manifiesto"
-            android:textColor="#FBFBFB"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="322dp"
+                android:layout_height="305dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="51dp"
+                android:background="@drawable/circle"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/caratula"
+                tools:layout_editor_absoluteX="44dp"
+                tools:layout_editor_absoluteY="64dp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/artist"
-            android:layout_width="115dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="150dp"
-            android:layout_marginEnd="18dp"
-            android:text="La Scene"
-            android:textColor="#9AF1EEEE" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/song"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:gravity="center"
+                android:text="Manifiesto"
+                android:textColor="#FBFBFB"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="La Scene"
+                android:textColor="#9AF1EEEE" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="374dp"
@@ -109,6 +110,7 @@
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -180,6 +182,7 @@
 
 
     </LinearLayout>
+
     <ImageButton
         android:id="@+id/btn_show_list"
         android:layout_width="42dp"
