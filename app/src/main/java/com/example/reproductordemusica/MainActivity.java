@@ -89,8 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     vectormp[posicion].seekTo(i);
                     if (i == seekBar.getMax()) {
                         progressBar.setVisibility(View.VISIBLE);
-                        play_pause.setBackgroundResource(R.drawable.pause_circle); }
-                    else{progressBar.setVisibility(View.GONE);
+                        play_pause.setBackgroundResource(R.drawable.pause_circle);
                     }
                 }
 
@@ -100,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
 
         });
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             handler.postDelayed(() -> {
                 progressBar.setVisibility(View.GONE);
                 Siguiente(null); // Pasar a la siguiente canción después de 2 segundos
-            }, 2000);
+            }, 1000);
         });
     }
     // Configurar el listener de finalización del MediaPlayer para manejar las transiciones de pistas ... Config the finalize listener for the Media player so it can handle the song transition
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "No hay más canciones", Toast.LENGTH_SHORT).show();
                 play_pause.setBackgroundResource(R.drawable.play_circle);
             }
-        }, 3000); // 1000 milisegundos = 1segundos (simulación de carga)
+        }, 1000); // 1000 milisegundos = 1segundos (simulación de carga)
 
     }
 
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "No hay más canciones", Toast.LENGTH_SHORT).show();
             }
-        },3000);
+        },1000);
     }
 
     // Reinicializar las instancias de MediaPlayer (útil al cambiar de pista) ... Reset the Instance of the MediaPlayer
@@ -314,10 +314,10 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 seekBar.setProgress(vectormp[posicion].getCurrentPosition());
                 actualizarTiempo(); // Llama al método para actualizar los TextViews ... Calls the method to update the Textviews
-                handler.postDelayed(this, 2000);
+                handler.postDelayed(this, 1000);
             }
         };
-        handler.postDelayed(runnable, 2000);
+        handler.postDelayed(runnable, 1000);
     }
     // Método para formatear el tiempo en minutos y segundos ... Method to Reset the time in minutes and seconds
     private String formatearTiempo(int segundos) {
