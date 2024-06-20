@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     Runnable runnable; // Runnable para actualizar el SeekBar ... Runnable for updating the Seekbar
     Handler handler; // Handler para gestionar las actualizaciones del SeekBar ... Handler for manage the updates of the seekbar
     View mainLayout; // Vista principal para cambiar dinámicamente el fondo ... Main view to change a dinamic background
-    TextView song, artist;
+    TextView song, artist; //Texto del nombre de la canción y del artista
     TextView tiempoTranscurridoTextView;
     TextView tiempoRestanteTextView;
     private final String[] audioNames = {"manifiesto", "mas_de_lo_mismo", "tamo_es_pa_gozar"};
