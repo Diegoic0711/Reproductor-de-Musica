@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import androidx.palette.graphics.Palette;
 
 public class MainActivity extends AppCompatActivity {
     // Componentes de la UI ... UI components
+    ProgressBar progressBar;
     ImageButton play_pause, repeat_one; // Botones para reproducir/pausar y repetir ... Buttoms for play/pause and repeat
     MediaPlayer mp; // Instancia de MediaPlayer para manejar la reproducción de música ... Instance the MediaPlayer to manage the music player
     ImageView iv; // ImageView para mostrar la carátula del álbum ... ImageView to show the album cover
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         // Inicializar los componentes de la UI ... Inicialize UI components
+        progressBar = findViewById(R.id.progressBar);
         mainLayout = findViewById(R.id.main); // Referencia al layout principal ... Main Layout Reference
         play_pause = findViewById(R.id.play_pause); // Botón de reproducir/pausar ...  Play/Pause Button
         repeat_one = findViewById(R.id.repeat_one); // Botón de repetir ... Repit Button
@@ -84,13 +87,30 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (b) {
                     vectormp[posicion].seekTo(i);
+                    if (i == seekBar.getMax()) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        play_pause.setBackgroundResource(R.drawable.pause_circle); }
+                    else{progressBar.setVisibility(View.GONE);
+                    }
                 }
+
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
+        });
+
+        vectormp[posicion].setOnCompletionListener(mp -> {
+            progressBar.setVisibility(View.VISIBLE);
+
+            handler.postDelayed(() -> {
+                progressBar.setVisibility(View.GONE);
+                Siguiente(null); // Pasar a la siguiente canción después de 2 segundos
+            }, 2000);
         });
     }
     // Configurar el listener de finalización del MediaPlayer para manejar las transiciones de pistas ... Config the finalize listener for the Media player so it can handle the song transition
@@ -99,14 +119,24 @@ public class MainActivity extends AppCompatActivity {
             final int index = i;
             vectormp[i].setOnCompletionListener(mediaPlayer -> {
                 mediaPlayer.seekTo(0);
+                mediaPlayer.pause(); // Pausar al final
+                play_pause.setBackgroundResource(R.drawable.play_circle);
+                // Esperar 2 segundos y luego reproducir la siguiente canción
+                new Handler().postDelayed(() -> {
+                    progressBar.setVisibility(View.GONE);
                 if (posicion < vectormp.length - 1) {
                     posicion++;
                 } else {
                     posicion = 0;
                 }
                 updateUI();
-                vectormp[posicion].start();
+                    vectormp[posicion].seekTo(0); // Reiniciar la posición de la nueva pista a 0
                 updateSeekbar();
+                    updateUI();
+                    vectormp[posicion].start();
+                    play_pause.setBackgroundResource(R.drawable.pause_circle);
+                    updateSeekbar();
+                }, 3000);
             });
         }
     }
@@ -138,37 +168,79 @@ public class MainActivity extends AppCompatActivity {
             repetir = 1;
         }
     }
+
     // Saltar a la siguiente pista ...  goes to the next song
     public void Siguiente(View view) {
-        if (posicion < vectormp.length - 1) {
-            if (vectormp[posicion].isPlaying()) {
-                vectormp[posicion].stop();
-            }
-            play_pause.setBackgroundResource(R.drawable.pause_circle);
-            posicion++;
-            vectormp[posicion].start();
-            updateUI();
-            updateSeekbar();
-        } else {
-            Toast.makeText(this, "No hay más canciones", Toast.LENGTH_SHORT).show();
+
+        if (vectormp[posicion].isPlaying()) {
+            vectormp[posicion].pause(); // Pausar la pista actual
+            handler.removeCallbacks(runnable); // Detener el runnable que actualiza el SeekBar
+            play_pause.setBackgroundResource(R.drawable.play_circle);
         }
+        // Mostrar la ProgressBar
+        progressBar.setVisibility(View.VISIBLE);
+
+        new Handler().postDelayed(() -> {
+
+            progressBar.setVisibility(View.GONE);
+
+
+            if (posicion < vectormp.length - 1) {
+                if (vectormp[posicion].isPlaying()) {
+                    vectormp[posicion].stop();
+                }
+                play_pause.setBackgroundResource(R.drawable.pause_circle);
+                if (repetir == 1) {
+                    Repetir(null); // Llama a la función Repetir para desactivar el loop y actualizar el ícono
+                }
+                posicion++;
+                vectormp[posicion].seekTo(0); // Reiniciar la posición de la nueva pista a 0
+                vectormp[posicion].start();
+                updateUI();
+                updateSeekbar();
+            } else {
+                Toast.makeText(this, "No hay más canciones", Toast.LENGTH_SHORT).show();
+                play_pause.setBackgroundResource(R.drawable.play_circle);
+            }
+        }, 3000); // 1000 milisegundos = 1segundos (simulación de carga)
+
     }
+
     // Volver a la pista anterior ...  goes back to the previus song
     public void Anterior(View view) {
-        if (posicion >= 1) {
-            if (vectormp[posicion].isPlaying()) {
-                vectormp[posicion].stop();
-                resetMediaPlayers();
-            }
-            play_pause.setBackgroundResource(R.drawable.pause_circle);
-            posicion--;
-            vectormp[posicion].start();
-            updateUI();
-            updateSeekbar();
-        } else {
-            Toast.makeText(this, "No hay más canciones", Toast.LENGTH_SHORT).show();
+
+        if (vectormp[posicion].isPlaying()) {
+            vectormp[posicion].pause(); // Pausar la pista actual
+            handler.removeCallbacks(runnable); // Detener el runnable que actualiza el SeekBar
+            play_pause.setBackgroundResource(R.drawable.play_circle);
         }
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        new Handler().postDelayed(() -> {
+
+            progressBar.setVisibility(View.GONE);
+            if (posicion >= 1) {
+                if (vectormp[posicion].isPlaying()) {
+                    vectormp[posicion].stop();
+                    handler.removeCallbacks(runnable);
+                    resetMediaPlayers();
+                }
+                play_pause.setBackgroundResource(R.drawable.pause_circle);
+                if (repetir == 1) {
+                    Repetir(null); // Llama a la función Repetir para desactivar el loop y actualizar el ícono
+                }
+                posicion--;
+                vectormp[posicion].seekTo(0); // Reiniciar la posición de la nueva pista a 0
+                vectormp[posicion].start();
+                updateUI();
+                updateSeekbar();
+            } else {
+                Toast.makeText(this, "No hay más canciones", Toast.LENGTH_SHORT).show();
+            }
+        },3000);
     }
+
     // Reinicializar las instancias de MediaPlayer (útil al cambiar de pista) ... Reset the Instance of the MediaPlayer
     private void resetMediaPlayers() {
         vectormp[0] = MediaPlayer.create(this, R.raw.manifiesto);
@@ -242,10 +314,10 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 seekBar.setProgress(vectormp[posicion].getCurrentPosition());
                 actualizarTiempo(); // Llama al método para actualizar los TextViews ... Calls the method to update the Textviews
-                handler.postDelayed(this, 1000);
+                handler.postDelayed(this, 2000);
             }
         };
-        handler.postDelayed(runnable, 1000);
+        handler.postDelayed(runnable, 2000);
     }
     // Método para formatear el tiempo en minutos y segundos ... Method to Reset the time in minutes and seconds
     private String formatearTiempo(int segundos) {
