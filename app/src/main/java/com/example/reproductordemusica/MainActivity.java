@@ -99,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                new Handler().postDelayed(() -> {
+                    progressBar.setVisibility(View.GONE);
+                }, 1000);
             }
 
         });
@@ -130,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     posicion = 0;
                 }
                 updateUI();
-                    vectormp[posicion].seekTo(0); // Reiniciar la posición de la nueva pista a 0
+                   vectormp[posicion].seekTo(0); // Reiniciar la posición de la nueva pista a 0
                 updateSeekbar();
                     updateUI();
                     vectormp[posicion].start();
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
     // Reproducir o pausar la pista actual ...  play or pause the actual song
     public void PlayPause(View view) {
         if (vectormp[posicion].isPlaying()) {
@@ -190,9 +193,7 @@ public class MainActivity extends AppCompatActivity {
                     vectormp[posicion].stop();
                 }
                 play_pause.setBackgroundResource(R.drawable.pause_circle);
-                if (repetir == 1) {
-                    Repetir(null); // Llama a la función Repetir para desactivar el loop y actualizar el ícono
-                }
+               DisableRepetir();
                 posicion++;
                 vectormp[posicion].seekTo(0); // Reiniciar la posición de la nueva pista a 0
                 vectormp[posicion].start();
@@ -205,6 +206,12 @@ public class MainActivity extends AppCompatActivity {
         }, 1000); // 1000 milisegundos = 1segundos (simulación de carga)
 
     }
+    private void DisableRepetir(){
+        if (repetir == 1) {
+            Repetir(null); // Llama a la función Repetir para desactivar el loop y actualizar el ícono
+        }
+    }
+
 
     // Volver a la pista anterior ...  goes back to the previus song
     public void Anterior(View view) {
@@ -247,6 +254,8 @@ public class MainActivity extends AppCompatActivity {
         vectormp[1] = MediaPlayer.create(this, R.raw.mas_de_lo_mismo);
         vectormp[2] = MediaPlayer.create(this, R.raw.tamo_es_pa_gozar);
     }
+
+
     // Actualizar los componentes de la UI en función de la pista actual ... Update the Ui components in fuction of the actual song
     private void updateUI() {
         int imageResId;
@@ -352,14 +361,14 @@ public class MainActivity extends AppCompatActivity {
             // Actualiza la posición actual ... Update the actual position
             if (which != posicion) { // Solo si la selección es diferente a la posición actual... Only if the selection is different of the actual position
                 vectormp[posicion].stop();
+                handler.removeCallbacks(runnable);
                 posicion = which;
                 // Reproduce la pista seleccionada ... Reproduce the selected song
                 vectormp[posicion].start();
                 play_pause.setBackgroundResource(R.drawable.pause_circle);
                 updateSeekbar();
+                updateUI();
             }
-            // Actualiza la interfaz de usuario independientemente de si se selecciona o no una nueva canción... Update user interface independently of the selection of a song
-            updateUI();
         });
         builder.setNegativeButton("Cancelar", null);
         AlertDialog dialog = builder.create();
