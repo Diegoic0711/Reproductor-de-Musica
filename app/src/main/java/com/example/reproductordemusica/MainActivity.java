@@ -234,10 +234,9 @@ public class MainActivity extends AppCompatActivity {
                     resetMediaPlayers();
                 }
                 play_pause.setBackgroundResource(R.drawable.pause_circle);
-                if (repetir == 1) {
-                    Repetir(null); // Llama a la función Repetir para desactivar el loop y actualizar el ícono
-                }
+                DisableRepetir();
                 posicion--;
+                vectormp[posicion] = MediaPlayer.create(MainActivity.this, getResources().getIdentifier(audioNames[posicion], "raw", getPackageName()));
                 vectormp[posicion].seekTo(0); // Reiniciar la posición de la nueva pista a 0
                 vectormp[posicion].start();
                 updateUI();
@@ -354,16 +353,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void ShowAudioList(View view) {
-         // Crear un diálogo AlertDialog con ListView ... Create a dialog AlertDialog with ListView
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if (vectormp[posicion].isPlaying()) {
+            vectormp[posicion].pause();
+            handler.removeCallbacks(runnable);
+            play_pause.setBackgroundResource(R.drawable.play_circle);
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);// Crear un diálogo AlertDialog con ListView
         builder.setTitle("Lista de Audios");
         builder.setItems(audioNames, (dialog, which) -> {
             // Actualiza la posición actual ... Update the actual position
             if (which != posicion) { // Solo si la selección es diferente a la posición actual... Only if the selection is different of the actual position
                 vectormp[posicion].stop();
-                handler.removeCallbacks(runnable);
+                vectormp[posicion].reset();
+                vectormp[posicion].release();
                 posicion = which;
-                // Reproduce la pista seleccionada ... Reproduce the selected song
+                // Reproduce la pista seleccionada
+                vectormp[posicion] = MediaPlayer.create(MainActivity.this, getResources().getIdentifier(audioNames[posicion], "raw", getPackageName()));
                 vectormp[posicion].start();
                 play_pause.setBackgroundResource(R.drawable.pause_circle);
                 updateSeekbar();
