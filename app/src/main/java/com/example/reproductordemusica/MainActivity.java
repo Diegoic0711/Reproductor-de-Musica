@@ -25,17 +25,16 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.palette.graphics.Palette;
 
 public class MainActivity extends AppCompatActivity {
-    // Componentes de la UI ... UI components
+    //UI components
     ProgressBar progressBar;
-    ImageButton play_pause, repeat_one; // Botones para reproducir/pausar y repetir ... Buttoms for play/pause and repeat
-    MediaPlayer mp; // Instancia de MediaPlayer para manejar la reproducción de música ... Instance the MediaPlayer to manage the music player
-    ImageView iv; // ImageView para mostrar la carátula del álbum ... ImageView to show the album cover
-    int repetir = 2, posicion = 0; // Variables de control para la repetición y la posición de la pista ... Control variables for the repetition and position of song
-    MediaPlayer vectormp[] = new MediaPlayer[3]; // Array de instancias de MediaPlayer para múltiples pistas ... instance array of MediaPlayer for multiple songs
-    SeekBar seekBar; // SeekBar para mostrar y controlar la posición de reproducción ... SeekBar to show and control the reproduction position
-    Runnable runnable; // Runnable para actualizar el SeekBar ... Runnable for updating the Seekbar
-    Handler handler; // Handler para gestionar las actualizaciones del SeekBar ... Handler for manage the updates of the seekbar
-    View mainLayout; // Vista principal para cambiar dinámicamente el fondo ... Main view to change a dinamic background
+    ImageButton play_pause, repeat_one; // Buttons for play/pause and repeat
+    ImageView iv; //ImageView to show the album cover
+    int repetir = 2, posicion = 0; // Control variables for the repetition and position of song
+    MediaPlayer vectormp[] = new MediaPlayer[3]; //Array of MediaPlayer instances for multiple tracks
+    SeekBar seekBar; //SeekBar to show and control the reproduction position
+    Runnable runnable; //Runnable for updating the Seekbar
+    Handler handler; //Handler for manage the updates of the seekbar
+    View mainLayout; //Main view to change a dinamic background
     TextView song, artist;
     TextView tiempoTranscurridoTextView;
     TextView tiempoRestanteTextView;
@@ -47,40 +46,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        // Ajustar la UI para mostrar en pantalla completa ... Adjust the UI to show it FullScreen
+        //Adjust the UI to show it FullScreen
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        // Inicializar los componentes de la UI ... Inicialize UI components
+        //Inicialize UI components
         progressBar = findViewById(R.id.progressBar);
-        mainLayout = findViewById(R.id.main); // Referencia al layout principal ... Main Layout Reference
-        play_pause = findViewById(R.id.play_pause); // Botón de reproducir/pausar ...  Play/Pause Button
-        repeat_one = findViewById(R.id.repeat_one); // Botón de repetir ... Repit Button
-        iv = findViewById(R.id.image_view); // ImageView para la carátula del álbum ... Album cover ImageView
-        seekBar = findViewById(R.id.seekBar); // SeekBar para la posición de reproducción ... SeekBar for the reproduction position
+        mainLayout = findViewById(R.id.main); //Main Layout Reference
+        play_pause = findViewById(R.id.play_pause); //Play/Pause Button
+        repeat_one = findViewById(R.id.repeat_one); //Repit Button
+        iv = findViewById(R.id.image_view); //Album cover ImageView
+        seekBar = findViewById(R.id.seekBar); //SeekBar for the reproduction position
         handler = new Handler();
-        song = findViewById(R.id.song); //Textview del nombre de la pista o canción ... Name of the song TextView
-        artist = findViewById(R.id.artist); //Textview del nombre del artista ...  Artist name TextView
+        song = findViewById(R.id.song); //Name of the song TextView
+        artist = findViewById(R.id.artist); //Artist name TextView
         tiempoTranscurridoTextView = findViewById(R.id.tiempoTranscurrido);
         tiempoRestanteTextView = findViewById(R.id.tiempoRestante);
-        // Inicializar los reproductores de medios ... Initialize Media Reproductors
+        //Initialize Media Reproductors
         initializeMediaPlayers();
-        // Configurar el listener del SeekBar ...  config Listener SeekBar
+        //config Listener SeekBar
         setupSeekBar();
-        // Configurar el listener de finalización del MediaPlayer ... config finalization listener of the MediaPlayer
+        //Config finalization listener of the MediaPlayer
         setupMediaCompletionListener();
-        // Configurar el fondo degradado inicial ... config initial gradient background
-        updateBackgroundColor(R.drawable.caratula); // Usa la carátula inicial como referencia ... Use initial cover as reference
+        //Config initial gradient background
+        updateBackgroundColor(R.drawable.caratula); //Use initial cover as reference
     }
-    // Inicializar las instancias de MediaPlayer con los recursos de audio ...  Initialize the MediaPlayer instance of Audio resorces
+    //Initialize the MediaPlayer instance of Audio resorces
     private void initializeMediaPlayers() {
         vectormp[0] = MediaPlayer.create(this, R.raw.manifiesto);
         vectormp[1] = MediaPlayer.create(this, R.raw.mas_de_lo_mismo);
         vectormp[2] = MediaPlayer.create(this, R.raw.tamo_es_pa_gozar);
     }
-    // Configurar el listener de cambios del SeekBar ... config listener of the SeekBar
+    //Config listener of the SeekBar
     private void setupSeekBar() {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -111,11 +110,11 @@ public class MainActivity extends AppCompatActivity {
 
             handler.postDelayed(() -> {
                 progressBar.setVisibility(View.GONE);
-                Siguiente(null); // Pasar a la siguiente canción después de 2 segundos
+                Siguiente(null); //Skip to the next song after 2 seconds
             }, 1000);
         });
     }
-    // Configurar el listener de finalización del MediaPlayer para manejar las transiciones de pistas ... Config the finalize listener for the Media player so it can handle the song transition
+    //Config the finalize listener for the Media player so it can handle the song transition
     private void setupMediaCompletionListener() {
         for (int i = 0; i < vectormp.length; i++) {
             final int index = i;
@@ -123,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.seekTo(0);
                 mediaPlayer.pause(); // Pausar al final
                 play_pause.setBackgroundResource(R.drawable.play_circle);
-                // Esperar 2 segundos y luego reproducir la siguiente canción
+                //Wait 2 seconds and then play the next song
                 new Handler().postDelayed(() -> {
                     progressBar.setVisibility(View.GONE);
                 if (posicion < vectormp.length - 1) {
@@ -132,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     posicion = 0;
                 }
                 updateUI();
-                   vectormp[posicion].seekTo(0); // Reiniciar la posición de la nueva pista a 0
+                   vectormp[posicion].seekTo(0); //Reset the position of the new track to 0
                 updateSeekbar();
                     updateUI();
                     vectormp[posicion].start();
@@ -143,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Reproducir o pausar la pista actual ...  play or pause the actual song
+    // play or pause the actual song
     public void PlayPause(View view) {
         if (vectormp[posicion].isPlaying()) {
             vectormp[posicion].pause();
@@ -157,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             updateSeekbar();
         }
     }
-    // Alternar la funcionalidad de repetición para la pista actual ... Alter the fuctionality of repetion for the actual song
+    //Alter the fuctionality of repetion for the actual song
     public void Repetir(View view) {
         if (repetir == 1) {
             repeat_one.setBackgroundResource(R.drawable.repeat);
@@ -172,22 +171,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Saltar a la siguiente pista ...  goes to the next song
+    //goes to the next song
     public void Siguiente(View view) {
-
         if (vectormp[posicion].isPlaying()) {
-            vectormp[posicion].pause(); // Pausar la pista actual
-            handler.removeCallbacks(runnable); // Detener el runnable que actualiza el SeekBar
+            vectormp[posicion].pause(); //Pause the current track
+            handler.removeCallbacks(runnable); //Stop the runnable that updates the SeekBar
             play_pause.setBackgroundResource(R.drawable.play_circle);
         }
-        // Mostrar la ProgressBar
+        //Show the ProgressBar
         progressBar.setVisibility(View.VISIBLE);
-
         new Handler().postDelayed(() -> {
-
             progressBar.setVisibility(View.GONE);
-
-
             if (posicion < vectormp.length - 1) {
                 if (vectormp[posicion].isPlaying()) {
                     vectormp[posicion].stop();
@@ -195,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 play_pause.setBackgroundResource(R.drawable.pause_circle);
                DisableRepetir();
                 posicion++;
-                vectormp[posicion].seekTo(0); // Reiniciar la posición de la nueva pista a 0
+                vectormp[posicion].seekTo(0); //Reset the position of the new track to 0
                 vectormp[posicion].start();
                 updateUI();
                 updateSeekbar();
@@ -203,29 +197,23 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "No hay más canciones", Toast.LENGTH_SHORT).show();
                 play_pause.setBackgroundResource(R.drawable.play_circle);
             }
-        }, 1000); // 1000 milisegundos = 1segundos (simulación de carga)
+        }, 1000); //1000 milliseconds = 1seconds (load simulation)
 
     }
     private void DisableRepetir(){
         if (repetir == 1) {
-            Repetir(null); // Llama a la función Repetir para desactivar el loop y actualizar el ícono
+            Repetir(null); //Call the Repeat function to disable the loop and update the icon
         }
     }
-
-
-    // Volver a la pista anterior ...  goes back to the previus song
+    //Goes back to the previus song
     public void Anterior(View view) {
-
         if (vectormp[posicion].isPlaying()) {
-            vectormp[posicion].pause(); // Pausar la pista actual
-            handler.removeCallbacks(runnable); // Detener el runnable que actualiza el SeekBar
+            vectormp[posicion].pause(); //Pause current track
+            handler.removeCallbacks(runnable); //Stop the runnable that updates the SeekBar
             play_pause.setBackgroundResource(R.drawable.play_circle);
         }
-
         progressBar.setVisibility(View.VISIBLE);
-
         new Handler().postDelayed(() -> {
-
             progressBar.setVisibility(View.GONE);
             if (posicion >= 1) {
                 if (vectormp[posicion].isPlaying()) {
@@ -236,8 +224,10 @@ public class MainActivity extends AppCompatActivity {
                 play_pause.setBackgroundResource(R.drawable.pause_circle);
                 DisableRepetir();
                 posicion--;
-                vectormp[posicion] = MediaPlayer.create(MainActivity.this, getResources().getIdentifier(audioNames[posicion], "raw", getPackageName()));
-                vectormp[posicion].seekTo(0); // Reiniciar la posición de la nueva pista a 0
+                vectormp[posicion] = MediaPlayer.create(MainActivity.this,
+                        getResources().getIdentifier(audioNames[posicion], "raw",
+                                getPackageName()));
+                vectormp[posicion].seekTo(0); //Reset the position of the new track to 0
                 vectormp[posicion].start();
                 updateUI();
                 updateSeekbar();
@@ -246,16 +236,13 @@ public class MainActivity extends AppCompatActivity {
             }
         },1000);
     }
-
-    // Reinicializar las instancias de MediaPlayer (útil al cambiar de pista) ... Reset the Instance of the MediaPlayer
+    //Reset the Instance of the MediaPlayer
     private void resetMediaPlayers() {
         vectormp[0] = MediaPlayer.create(this, R.raw.manifiesto);
         vectormp[1] = MediaPlayer.create(this, R.raw.mas_de_lo_mismo);
         vectormp[2] = MediaPlayer.create(this, R.raw.tamo_es_pa_gozar);
     }
-
-
-    // Actualizar los componentes de la UI en función de la pista actual ... Update the Ui components in fuction of the actual song
+    //Update the Ui components in fuction of the actual song
     private void updateUI() {
         int imageResId;
         switch (posicion) {
@@ -283,66 +270,72 @@ public class MainActivity extends AppCompatActivity {
         iv.setImageResource(imageResId);
         updateBackgroundColor(imageResId);
     }
-    // Actualizar el color de fondo basado en la carátula del álbum ... Changes the colour background base in the cover of the album
+    //Changes the colour background base in the cover of the album
     private void updateBackgroundColor(int imageResId) {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imageResId);
         Palette.from(bitmap).generate(palette -> {
             if (palette != null) {
-                int defaultColor = 0x000000; // Color por defecto en caso de que la paleta falle ...  Default colour in case the pallete fails
+                int defaultColor = 0x000000; //Default colour in case the pallete fails
                 int dominantColor = palette.getDominantColor(defaultColor);
                 if (isColorLight(dominantColor)) {
-                    dominantColor = palette.getVibrantColor(defaultColor); // Usar un color vibrante si el dominante es muy claro ...  Uses a vibrant colour if the dominant is too light
+                    dominantColor = palette.getVibrantColor(defaultColor);//Uses a vibrant colour
+                    // if the dominant is too light
                 }
                 if (dominantColor == defaultColor) {
-                    dominantColor = palette.getMutedColor(defaultColor); // Usar un color apagado si no hay color vibrante disponible ... Uses a off colour if there`s not available colour vibrant
+                    dominantColor = palette.getMutedColor(defaultColor); //Uses a off colour if
+                    // there`s not available colour vibrant
                 }
-                int darkenedColor = darkenColor(dominantColor); // Oscurecer el color dominante ...  Darkest the dominant colour
-                GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{darkenedColor, dominantColor});
+                int darkenedColor = darkenColor(dominantColor); //Darkest the dominant colour
+                GradientDrawable gradientDrawable = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM,
+                        new int[]{darkenedColor, dominantColor});
                 mainLayout.setBackground(gradientDrawable);
             }
         });
     }
-    // Oscurecer un color reduciendo su brillo ... darkest a colour Reducing the brightness
+    //Darkest a colour Reducing the brightness
     private int darkenColor(int color) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
-        hsv[2] *= 20f; // Reducir el brillo para oscurecer el color ...  Reduce brightness of the colour
+        hsv[2] *= 20f; //Reduce brightness of the colour
         return Color.HSVToColor(hsv);
     }
-    // Verificar si un color es claro o oscuro ... Verifice if the colour is light or dark
+    //Verifice if the colour is light or dark
     private boolean isColorLight(int color) {
-        double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
+        double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color)
+                + 0.114 * Color.blue(color)) / 255;
         return darkness < 0.5;
     }
-    // Actualizar el SeekBar periódicamente para reflejar la posición de reproducción ... Updates SeekBar periodically so it reflec the posicion of reproduction
+    //Updates SeekBar periodically so it reflec the posicion of reproduction
     public void updateSeekbar() {
         seekBar.setMax(vectormp[posicion].getDuration());
         runnable = new Runnable() {
             @Override
             public void run() {
                 seekBar.setProgress(vectormp[posicion].getCurrentPosition());
-                actualizarTiempo(); // Llama al método para actualizar los TextViews ... Calls the method to update the Textviews
+                actualizarTiempo(); //Calls the method to update the Textviews
                 handler.postDelayed(this, 1000);
             }
         };
         handler.postDelayed(runnable, 1000);
     }
-    // Método para formatear el tiempo en minutos y segundos ... Method to Reset the time in minutes and seconds
+    //Method to Reset the time in minutes and seconds
     private String formatearTiempo(int segundos) {
         int minutos = segundos / 60;
         int segundosRestantes = segundos % 60;
         return String.format("%d:%02d", minutos, segundosRestantes);
     }
 
-    // Método para actualizar los TextViews con el tiempo transcurrido y restante ... Method to Update the TextViews with the elapsed and remaining time
+    //Method to Update the TextViews with the elapsed and remaining time
     private void actualizarTiempo() {
         int duracionTotal = vectormp[posicion].getDuration() / 1000;
         int posicionActual = vectormp[posicion].getCurrentPosition() / 1000;
 
         tiempoTranscurridoTextView.setText(formatearTiempo(posicionActual));
-        tiempoRestanteTextView.setText(String.format("%s", formatearTiempo(duracionTotal - posicionActual)));
+        tiempoRestanteTextView.setText(String.format("%s", formatearTiempo
+                (duracionTotal - posicionActual)));
     }
-    // Liberar los recursos del MediaPlayer cuando la actividad es destruida ... Free resorces of the Media player when the activity is destroy
+    //Free resorces of the Media player when the activity is destroy
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -358,17 +351,20 @@ public class MainActivity extends AppCompatActivity {
             handler.removeCallbacks(runnable);
             play_pause.setBackgroundResource(R.drawable.play_circle);
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);// Crear un diálogo AlertDialog con ListView
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);//Create an AlertDialog
+        // with ListView
         builder.setTitle("Lista de Audios");
         builder.setItems(audioNames, (dialog, which) -> {
-            // Actualiza la posición actual ... Update the actual position
-            if (which != posicion) { // Solo si la selección es diferente a la posición actual... Only if the selection is different of the actual position
+            //Update the actual position
+            if (which != posicion) { //Only if the selection is different of the actual position
                 vectormp[posicion].stop();
                 vectormp[posicion].reset();
                 vectormp[posicion].release();
                 posicion = which;
-                // Reproduce la pista seleccionada
-                vectormp[posicion] = MediaPlayer.create(MainActivity.this, getResources().getIdentifier(audioNames[posicion], "raw", getPackageName()));
+                //Play the selected track
+                vectormp[posicion] = MediaPlayer.create(MainActivity.this,
+                        getResources().getIdentifier(audioNames[posicion], "raw",
+                                getPackageName()));
                 vectormp[posicion].start();
                 play_pause.setBackgroundResource(R.drawable.pause_circle);
                 updateSeekbar();

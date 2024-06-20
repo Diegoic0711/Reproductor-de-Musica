@@ -8,20 +8,6 @@
     android:background="@color/black"
     tools:context=".MainActivity">
 
-    <!-- The pause and play button is included here -->
-    <!-- Here is the image of the cover -->
-    <!-- Here we have the button to skip to the next song -->
-
-    <!-- Here we have the button that jumps to the previous song -->
-    <!-- Here we have the button that repeats the song -->
-
-    <!-- Here we have the button that stops the song -->
-    <!-- FrameLayout to stack the circle and cover images -->
-
-
-    <!-- Album cover image -->
-
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -38,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <!-- Here is the image of the cover -->
             <ImageView
                 android:id="@+id/image_view"
                 android:layout_width="322dp"
@@ -52,12 +38,11 @@
                 tools:layout_editor_absoluteX="44dp"
                 tools:layout_editor_absoluteY="64dp" />
         </LinearLayout>
-
+        <!-- here you will find the names of artists and songs -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <TextView
                 android:id="@+id/song"
                 android:layout_width="match_parent"
@@ -68,7 +53,6 @@
                 android:textColor="#FBFBFB"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
             <TextView
                 android:id="@+id/artist"
                 android:layout_width="match_parent"
@@ -76,23 +60,20 @@
                 android:gravity="center"
                 android:text="La Scene"
                 android:textColor="#9AF1EEEE" />
-
         </LinearLayout>
-
+        <!-- shows the progress of the song and the minutes -->
         <LinearLayout
             android:layout_width="374dp"
             android:layout_height="62dp"
             android:layout_gravity="center"
             android:layout_marginBottom="24dp"
             android:orientation="horizontal">
-
             <TextView
                 android:id="@+id/tiempoTranscurrido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0:00"
                 android:textColor="@android:color/white" />
-
             <SeekBar
                 android:id="@+id/seekBar"
                 style="@style/CustomSeekBar"
@@ -101,21 +82,19 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:layout_weight="1" />
-
             <TextView
                 android:id="@+id/tiempoRestante"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3:45"
                 android:textColor="@android:color/white" />
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:orientation="horizontal">
-
+            <!-- Here we have the button to skip to the previous song -->
             <ImageButton
                 android:id="@+id/skip_previous"
                 android:layout_width="45dp"
@@ -132,7 +111,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/seekBar"
                 tools:ignore="TouchTargetSizeCheck" />
-
+            <!-- The pause and play button is included here -->
             <ImageButton
                 android:id="@+id/play_pause"
                 android:layout_width="47dp"
@@ -146,7 +125,7 @@
                 app:layout_constraintStart_toEndOf="@+id/skip_previous"
                 app:layout_constraintTop_toBottomOf="@+id/seekBar"
                 tools:ignore="TouchTargetSizeCheck" />
-
+            <!-- Here we have the button that jumps to the next song -->
             <ImageButton
                 android:id="@+id/skip_next"
                 android:layout_width="45dp"
@@ -161,7 +140,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/repeat_one"
                 app:layout_constraintStart_toEndOf="@+id/play_pause"
                 tools:ignore="TouchTargetSizeCheck" />
-
+            <!-- Here we have the button that repeats the song -->
             <ImageButton
                 android:id="@+id/repeat_one"
                 android:layout_width="51dp"
@@ -177,12 +156,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/skip_next"
                 tools:ignore="TouchTargetSizeCheck" />
-
         </LinearLayout>
-
-
     </LinearLayout>
-
+    <!--list button -->
     <ImageButton
         android:id="@+id/btn_show_list"
         android:layout_width="42dp"
