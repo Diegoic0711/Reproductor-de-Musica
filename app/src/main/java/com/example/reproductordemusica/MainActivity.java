@@ -24,6 +24,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.palette.graphics.Palette;
 
+import com.google.firebase.storage.FirebaseStorage;
+
+
 public class MainActivity extends AppCompatActivity {
     //UI components
     ProgressBar progressBar;
@@ -39,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     TextView tiempoTranscurridoTextView;
     TextView tiempoRestanteTextView;
     private final String[] audioNames = {"manifiesto", "mas_de_lo_mismo", "tamo_es_pa_gozar"};
+
+    //Enter firebase storage to the application
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     @SuppressLint("MissingInflatedId")
     @Override
