@@ -293,4 +293,41 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    private void fetchSongData() {
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String cover = dataSnapshot.child("cover").getValue(String.class);
+                String songName = dataSnapshot.child("songName").getValue(String.class);
+                String artist = dataSnapshot.child("artist").getValue(String.class);
+                String track = dataSnapshot.child("track").getValue(String.class);
+
+                Picasso.get().load(cover).into(coverImageView);
+                songNameTextView.setText(songName);
+                artistTextView.setText(artist);
+
+                playButton.setOnClickListener(v -> playTrack(track));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle possible errors.
+            }
+        });
+    }
+
+    private void playTrack(String trackUrl) {
+        MediaPlayer mediaPlayer = new MediaPlayer();
+        try {
+            mediaPlayer.setDataSource(trackUrl);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
 }
