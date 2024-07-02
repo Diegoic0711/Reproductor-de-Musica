@@ -23,7 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Menuprincipal extends AppCompatActivity implements FirebaseAdapter.OnItemClickListener {
+public class Menuprincipal extends AppCompatActivity implements
+        FirebaseAdapter.OnItemClickListener {
 
     private ArrayList<ModelFirebase> modelFirebaseArrayList;
     private ArrayList<ModelFirebase> favoriteSongsList;
@@ -59,7 +60,8 @@ public class Menuprincipal extends AppCompatActivity implements FirebaseAdapter.
         recyclerViewFavorites.setAdapter(favoriteSongsAdapter);
 
         // Configurar Firebase
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Musica");
+        DatabaseReference reference =
+                FirebaseDatabase.getInstance().getReference().child("Musica");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -73,7 +75,8 @@ public class Menuprincipal extends AppCompatActivity implements FirebaseAdapter.
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Menuprincipal.this, "Error al cargar datos de Firebase", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Menuprincipal.this,
+                        "Error al cargar datos de Firebase", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -100,9 +103,11 @@ public class Menuprincipal extends AppCompatActivity implements FirebaseAdapter.
             mediaPlayer.setDataSource(songUrl);
             mediaPlayer.prepare();
             mediaPlayer.start();
-            Toast.makeText(this, "Reproduciendo música", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    "Reproduciendo música", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
-            Toast.makeText(this, "Error al reproducir música", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    "Error al reproducir música", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -110,7 +115,8 @@ public class Menuprincipal extends AppCompatActivity implements FirebaseAdapter.
     private void showFavorites() {
         // Inflar el layout de favoritos.xml dentro del ConstraintLayout principal
         LayoutInflater inflater = LayoutInflater.from(this);
-        View favoritosLayout = inflater.inflate(R.layout.favoritos, findViewById(R.id.main), false);
+        View favoritosLayout = inflater.inflate(R.layout.favoritos,
+                findViewById(R.id.main), false);
 
         // Configurar RecyclerView de favoritos dentro del layout inflado
         RecyclerView recyclerViewFavorites = favoritosLayout.findViewById(R.id.Lista1);
@@ -125,13 +131,15 @@ public class Menuprincipal extends AppCompatActivity implements FirebaseAdapter.
         }
 
         // Configurar y asignar el adapter de favoritos
-        FavoriteSongsAdapter favoriteSongsAdapter = new FavoriteSongsAdapter(favoriteSongsList, this);
+        FavoriteSongsAdapter favoriteSongsAdapter =
+                new FavoriteSongsAdapter(favoriteSongsList, this);
         recyclerViewFavorites.setAdapter(favoriteSongsAdapter);
 
         // Mostrar el layout de favoritos y ocultar el RecyclerView principal
         recyclerViewMain.setVisibility(View.GONE);
         ViewGroup mainLayout = findViewById(R.id.main);
-        mainLayout.addView(favoritosLayout); // Agregar el layout inflado al ConstraintLayout principal
+        mainLayout.addView(favoritosLayout);
+        // Agregar el layout inflado al ConstraintLayout principal
     }
 
 

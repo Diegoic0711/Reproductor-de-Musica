@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton play_pause, repeat_one; // Buttons for play/pause and repeat
     ImageView iv; //ImageView to show the album cover
     int repetir = 2, posicion = 0; // Control variables for the repetition and position of song
-    MediaPlayer vectormp[] = new MediaPlayer[3]; //Array of MediaPlayer instances for multiple tracks
+    MediaPlayer vectormp[] = new MediaPlayer[3];//Array of MediaPlayer instances for multiple tracks
     SeekBar seekBar; //SeekBar to show and control the reproduction position
     Runnable runnable; //Runnable for updating the Seekbar
     Handler handler; //Handler for manage the updates of the seekbar

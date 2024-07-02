@@ -1,5 +1,6 @@
 package com.example.reproductordemusica;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,12 +46,14 @@ public class FirebaseAdapter extends RecyclerView.Adapter<FirebaseAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemlist, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemlist, parent,
+                false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView")
+    int position) {
         ModelFirebase modelFirebase = modelFirebaseArrayList.get(position);
 
         holder.song.setText(modelFirebase.getSong());
@@ -60,7 +63,8 @@ public class FirebaseAdapter extends RecyclerView.Adapter<FirebaseAdapter.ViewHo
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(17)))
                 .into(holder.imageView);
 
-        // Verificar si la canción está marcada como favorita y actualizar el icono correspondientemente
+        // Verificar si la canción está marcada como favorita y actualizar el
+        // icono correspondientemente
         if (modelFirebase.isFavorite()) {
             holder.favoriteButton.setImageResource(R.drawable.favorite);
         } else {
@@ -76,9 +80,11 @@ public class FirebaseAdapter extends RecyclerView.Adapter<FirebaseAdapter.ViewHo
 
                 // Mostrar mensaje de Toast según el estado actual
                 if (modelFirebase.isFavorite()) {
-                    Toast.makeText(context, "Agregado a favoritos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Agregado a favoritos",
+                            Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, "Eliminado de favoritos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Eliminado de favoritos",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
