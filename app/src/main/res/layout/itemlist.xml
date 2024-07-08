@@ -48,9 +48,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/app_detail"
+                android:text="app_detail"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
+
 
         </LinearLayout>
 

@@ -21,14 +21,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/lalezar"
             android:text="Favoritos"
             android:textColor="#FFFFFF"
             android:textSize="34sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="42dp"
             tools:layout_editor_absoluteY="28dp" />
-
+        <!-- android:fontFamily="@font/lalezar" -->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/Lista1"
