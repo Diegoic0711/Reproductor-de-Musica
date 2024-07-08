@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements
+public class Menuprincipal extends AppCompatActivity implements
         FirebaseAdapter.OnItemClickListener {
 
     private ArrayList<ModelFirebase> modelFirebaseArrayList;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MainActivity.this,
+                Toast.makeText(Menuprincipal.this,
                         "Error al cargar datos de Firebase", Toast.LENGTH_SHORT).show();
             }
         });

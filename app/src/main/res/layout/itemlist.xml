@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
                 android:layout_marginBottom="1dp"
-                android:text="@string/app_name"
+                android:text="@string/music"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -48,28 +48,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
                 android:layout_marginBottom="10dp"
-                android:text="app_detail"
+                android:text="@string/artista"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/favorite_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/none_favorite"
-            android:contentDescription="Fav"
-            android:onClick="toggleFavorite" />
 
         <ImageView
             android:id="@+id/playbtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="37dp"
-            android:layout_marginStart="-30dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="-10dp"
             android:background="@drawable/play"
             android:contentDescription="play"
             />

@@ -1,0 +1,87 @@
+{
+  "project_info": {
+    "project_number": "230812776809",
+    "firebase_url": "https://reproductor-de-musica-c651d-default-rtdb.firebaseio.com",
+    "project_id": "reproductor-de-musica-c651d",
+    "storage_bucket": "reproductor-de-musica-c651d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230812776809:android:91293eeecd36de64f0a5f8",
+        "android_client_info": {
+          "package_name": "com.example.reproductordemusica"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtcs7pSM-eyNmTn-C6Ytge6xAsSdMmju0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230812776809:android:af8b9367d18585ccf0a5f8",
+        "android_client_info": {
+          "package_name": "com.example.vistaprevia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtcs7pSM-eyNmTn-C6Ytge6xAsSdMmju0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230812776809:android:369e6874e5a20deaf0a5f8",
+        "android_client_info": {
+          "package_name": "com.examplere.productordemusica1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtcs7pSM-eyNmTn-C6Ytge6xAsSdMmju0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230812776809:android:f5f7b651fd8caab8f0a5f8",
+        "android_client_info": {
+          "package_name": "com.examplereproductordemusica"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtcs7pSM-eyNmTn-C6Ytge6xAsSdMmju0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

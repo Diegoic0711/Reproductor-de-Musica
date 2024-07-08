@@ -35,37 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center">
-
-            <Button
-                android:id="@+id/Listen"
-                android:layout_width="161dp"
-                android:layout_height="77dp"
-                android:layout_marginEnd="30dp"
-                android:backgroundTint="#EE0061"
-                android:text="listen"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.103" />
-
-            <Button
-                android:id="@+id/favoritas"
-                android:layout_width="153dp"
-                android:layout_height="77dp"
-                android:backgroundTint="#00FE4155"
-                android:text="Fav"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.883"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.104" />
-        </LinearLayout>
+            android:layout_gravity="center"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/Lista"
@@ -79,10 +49,6 @@
             app:layout_constraintVertical_bias="0.965"
             tools:listitem="@layout/itemlist" />
     </LinearLayout>
-
-    <include
-        layout="@layout/favoritos"
-        android:visibility="gone" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

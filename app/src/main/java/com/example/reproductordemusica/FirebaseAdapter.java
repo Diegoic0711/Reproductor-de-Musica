@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 public class FirebaseAdapter extends RecyclerView.Adapter<FirebaseAdapter.ViewHolder> {
     private final ArrayList<ModelFirebase> modelFirebaseArrayList;
-    private final ArrayList<ModelFirebase> favoriteSongsList;
     private Context context;
     private OnItemClickListener onItemClickListener;
 
@@ -28,18 +27,12 @@ public class FirebaseAdapter extends RecyclerView.Adapter<FirebaseAdapter.ViewHo
         void onPlayButtonClick(String songUrl);
     }
 
-    public ArrayList<ModelFirebase> getFavoriteSongsList() {
-        return favoriteSongsList;
-    }
-
-
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
 
     public FirebaseAdapter(ArrayList<ModelFirebase> modelFirebaseArrayList, Context context) {
         this.modelFirebaseArrayList = modelFirebaseArrayList;
-        this.favoriteSongsList = new ArrayList<>();
         this.context = context;
     }
 
@@ -63,31 +56,6 @@ public class FirebaseAdapter extends RecyclerView.Adapter<FirebaseAdapter.ViewHo
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(17)))
                 .into(holder.imageView);
 
-        // Verificar si la canción está marcada como favorita y actualizar el
-        // icono correspondientemente
-        if (modelFirebase.isFavorite()) {
-            holder.favoriteButton.setImageResource(R.drawable.favorite);
-        } else {
-            holder.favoriteButton.setImageResource(R.drawable.none_favorite);
-        }
-
-        holder.favoriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Invertir el estado de favorito y actualizar la interfaz
-                modelFirebase.setFavorite(!modelFirebase.isFavorite());
-                notifyItemChanged(position);
-
-                // Mostrar mensaje de Toast según el estado actual
-                if (modelFirebase.isFavorite()) {
-                    Toast.makeText(context, "Agregado a favoritos",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Eliminado de favoritos",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         holder.playbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +75,7 @@ public class FirebaseAdapter extends RecyclerView.Adapter<FirebaseAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imageView;
         private final TextView song, artist;
-        private final ImageView favoriteButton, playbtn;
+        private final ImageView playbtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -115,7 +83,6 @@ public class FirebaseAdapter extends RecyclerView.Adapter<FirebaseAdapter.ViewHo
             imageView = itemView.findViewById(R.id.Image);
             song = itemView.findViewById(R.id.song);
             artist = itemView.findViewById(R.id.artist);
-            favoriteButton = itemView.findViewById(R.id.favorite_button);
             playbtn = itemView.findViewById(R.id.playbtn);
         }
     }

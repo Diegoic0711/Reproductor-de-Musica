@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Reproductor de Musica</string>
+    <string name="music">Cancion</string>
+    <string name="artista">Artista</string>
 </resources>
