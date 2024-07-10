@@ -5,18 +5,17 @@ public class ModelFirebase {
     private String artist;
     private String cover_image;
     private String url;
-    private boolean isFavorite;
-
-
+    private boolean playing;
 
     public ModelFirebase() {
     }
 
-    public ModelFirebase(String song, String artist, String coverImage) {
+    public ModelFirebase(String song, String artist, String cover_image, String url, boolean playing) {
         this.song = song;
         this.artist = artist;
-        this.cover_image = coverImage;
-        this.url=url;
+        this.cover_image = cover_image;
+        this.url = url;
+        this.playing = playing;
     }
 
     public String getSong() {
@@ -26,6 +25,7 @@ public class ModelFirebase {
     public void setSong(String song) {
         this.song = song;
     }
+
     public String getArtist() {
         return artist;
     }
@@ -50,12 +50,11 @@ public class ModelFirebase {
         this.url = url;
     }
 
-    public boolean isFavorite() {
-        return isFavorite;
+    public boolean isPlaying() {
+        return playing;
     }
 
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
     }
-
 }
