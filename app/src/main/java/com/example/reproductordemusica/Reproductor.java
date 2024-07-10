@@ -110,11 +110,16 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
 
         // Inicializar el SeekBar
         seekBar = findViewById(R.id.seekBar);
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
-                    showLoadingSnackbarAndPlayFromSeekBar(progress); // Ir a la posición de la canción según el progreso del SeekBar
+                    mediaPlayer.seekTo(progress); // Adelantar o atrasar la canción según el progreso del SeekBar
+                    tiempoTranscurridoTextView.setText(millisecondsToTimer(progress));
+                    int totalDuration = mediaPlayer.getDuration();
+                    int remainingDuration = totalDuration - progress;
+                    tiempoRestanteTextView.setText(millisecondsToTimer(remainingDuration));
                 }
             }
 
@@ -128,7 +133,6 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
                 // No necesario para esta implementación
             }
         });
-
         // Inicializar el Handler para actualizar el SeekBar
         handler = new Handler();
 
@@ -141,7 +145,10 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             if (mediaPlayer.isPlaying()) {
                 pauseSong();
             } else {
-                playSong();
+                mediaPlayer.start();
+                // Iniciar el Handler para actualizar el SeekBar
+                handler.postDelayed(updateSeekBar, 0);
+                updatePlayPauseButtonIcon(true);
             }
         } else if (id == R.id.skip_previous) {
             skipToPreviousSong();
@@ -151,6 +158,7 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             toggleRepeatOne(); // Método para manejar la repetición
         }
     }
+
 
     // Método para reproducir una canción
     private void playSong() {
@@ -191,13 +199,11 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
                             if (currentPlayingPosition < modelFirebaseArrayList.size() - 1) {
                                 currentPlayingPosition++;
                                 showLoadingSnackbarAndPlay();
-                                playSong();
                             } else {
                                 // Si no hay más canciones, podrías decidir qué hacer aquí
                                 Toast.makeText(Reproductor.this, "No hay más canciones, reproduciendo desde el principio", Toast.LENGTH_SHORT).show();
                                 currentPlayingPosition = 0; // Volver al principio
                                 showLoadingSnackbarAndPlay();
-                                playSong();
                             }
                         }
                     }
@@ -211,6 +217,8 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             Toast.makeText(this, "No hay canción seleccionada para reproducir", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
     // Runnable para actualizar el SeekBar
     private Runnable updateSeekBar = new Runnable() {
@@ -227,12 +235,14 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
                 int totalDuration = mediaPlayer.getDuration();
                 int remainingDuration = totalDuration - currentPosition;
                 tiempoRestanteTextView.setText(millisecondsToTimer(remainingDuration));
-            }
 
-            // Ejecutar cada 1000 ms (1 segundo)
-            handler.postDelayed(this, 1000);
+                // Ejecutar cada 1000 ms (1 segundo)
+                handler.postDelayed(this, 1000);
+            }
         }
     };
+
+
 
     private String millisecondsToTimer(int milliseconds) {
         String finalTimerString = "";
@@ -259,8 +269,11 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             // Actualizar el estado de reproducción en el modelo y en la vista
             modelFirebaseArrayList.get(currentPlayingPosition).setPlaying(false);
             updatePlayPauseButtonIcon(false);
+            // Detener la actualización del SeekBar mientras está en pausa
+            handler.removeCallbacks(updateSeekBar);
         }
     }
+
 
     // Método para actualizar el ícono del botón de reproducción
     private void updatePlayPauseButtonIcon(boolean isPlaying) {
