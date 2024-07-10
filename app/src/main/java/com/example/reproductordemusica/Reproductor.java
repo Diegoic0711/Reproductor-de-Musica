@@ -278,9 +278,9 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
     // Método para actualizar el ícono del botón de reproducción
     private void updatePlayPauseButtonIcon(boolean isPlaying) {
         if (isPlaying) {
-            playPauseButton.setImageResource(R.drawable.pause_circle); // Cambiar a ícono de pausa
+            playPauseButton.setBackgroundResource(R.drawable.pause_circle); // Cambiar a ícono de pausa
         } else {
-            playPauseButton.setImageResource(R.drawable.play_circle); // Cambiar a ícono de reproducción
+            playPauseButton.setBackgroundResource(R.drawable.play_circle); // Cambiar a ícono de reproducción
         }
     }
 
@@ -448,10 +448,10 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
 
         // Cambiar el icono del botón según el estado de repetición
         if (isRepeatOne) {
-            repeatOneButton.setImageResource(R.drawable.repeat_one); // Icono activado de repetición
+            repeatOneButton.setBackgroundResource(R.drawable.repeat_one); // Icono activado de repetición
             Toast.makeText(this, "Repetición activada", Toast.LENGTH_SHORT).show();
         } else {
-            repeatOneButton.setImageResource(R.drawable.repeat); // Icono desactivado de repetición
+            repeatOneButton.setBackgroundResource(R.drawable.repeat); // Icono desactivado de repetición
             Toast.makeText(this, "Repetición desactivada", Toast.LENGTH_SHORT).show();
         }
     }
