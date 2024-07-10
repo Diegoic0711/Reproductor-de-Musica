@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Looper;
 import com.google.android.material.snackbar.Snackbar;
-
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,7 +49,6 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
     private boolean isRepeatOne = false;  // Variable para controlar el estado de repetición
     private Snackbar loadingSnackbar; // Snackbar para mostrar el mensaje de carga
     private static final int LOADING_DURATION = 3000; // Duración de la carga en milisegundos
-    private boolean isSnackbarShown = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +57,8 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
 
         // Inicializar MediaPlayer
         mediaPlayer = new MediaPlayer();
+
+
 
         // Inicializar modelFirebaseArrayList
         modelFirebaseArrayList = new ArrayList<>();
@@ -85,7 +86,6 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(Reproductor.this, "Error al cargar datos de Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
         // Configurar el botón de reproducción (play_pause)
         playPauseButton = findViewById(R.id.play_pause);
         playPauseButton.setOnClickListener(this);
@@ -131,6 +131,7 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
 
         // Inicializar el Handler para actualizar el SeekBar
         handler = new Handler();
+
     }
 
     @Override
@@ -275,6 +276,7 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
         Glide.with(this)
                 .asBitmap()
                 .load(coverImageUrl)
+                .transform(new RoundedCornersTransformation(20, 0)) // Aquí defines el radio de las esquinas redondeadas
                 .into(new CustomTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -440,8 +442,6 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             Toast.makeText(this, "Repetición desactivada", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
     @Override
     protected void onDestroy() {
