@@ -41,8 +41,9 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class Reproductor extends AppCompatActivity implements View.OnClickListener {
 
     private ArrayList<ModelFirebase> modelFirebaseArrayList;
-    private MediaPlayer mediaPlayer;
-    private int currentPlayingPosition = -1; // Posición de la canción que se está reproduciendo actualmente
+    public MediaPlayer mediaPlayer;
+    private int currentPlayingPosition = -1; // Posición de la canción
+    // que se está reproduciendo actualmente
     private ImageButton playPauseButton, skipPreviousButton, skipNextButton, repeatOneButton;
     private ImageView albumCoverImageView;
     private ConstraintLayout backgroundLayout;
@@ -140,12 +141,10 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
                     tiempoRestanteTextView.setText(millisecondsToTimer(remainingDuration));
                 }
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 // No necesario para esta implementación
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // No necesario para esta implementación
@@ -153,7 +152,6 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
         });
         // Inicializar el Handler para actualizar el SeekBar
         handler = new Handler();
-
     }
 
     @Override
@@ -182,7 +180,6 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
         }
     }
-
 
     // Método para reproducir una canción
     private void playSong() {
@@ -242,8 +239,6 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-
-
     // Runnable para actualizar el SeekBar
     private Runnable updateSeekBar = new Runnable() {
         @Override
@@ -265,8 +260,6 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             }
         }
     };
-
-
 
     private String millisecondsToTimer(int milliseconds) {
         String finalTimerString = "";
@@ -297,7 +290,6 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             handler.removeCallbacks(updateSeekBar);
         }
     }
-
 
     // Método para actualizar el ícono del botón de reproducción
     private void updatePlayPauseButtonIcon(boolean isPlaying) {
@@ -428,7 +420,6 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
                 if (!isRepeatOne && loadingSnackbar != null && loadingSnackbar.isShown()) {
                     loadingSnackbar.dismiss();
                 }
-
                 if (isRepeatOne) {
                     // Si está activada la repetición, reiniciar la canción actual
                     mediaPlayer.seekTo(0);
@@ -441,8 +432,6 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             }
         }, LOADING_DURATION); // LOADING_DURATION es el tiempo en milisegundos que defines, en este caso 3000 (3 segundos)
     }
-
-
 
     // Método para preparar la canción para reproducción sin iniciarla automáticamente
     private void prepareSong() {
