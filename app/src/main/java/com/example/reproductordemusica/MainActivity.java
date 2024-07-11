@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onPlayButtonClick(String songUrl) {
-        // Crear un Intent para iniciar la Activity del reproductor de música
         Intent intent = new Intent(this, Reproductor.class);
+        intent.putExtra("url", songUrl); // Pasar la URL de la canción al intent
         startActivity(intent);
     }
 

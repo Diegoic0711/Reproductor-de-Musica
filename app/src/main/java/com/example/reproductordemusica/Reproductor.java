@@ -1,4 +1,5 @@
 package com.example.reproductordemusica;
+import com.example.reproductordemusica.MainActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,14 +8,15 @@ import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.os.Looper;
+import com.google.android.material.snackbar.Snackbar;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +27,6 @@ import androidx.palette.graphics.Palette;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,14 +37,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-
 public class Reproductor extends AppCompatActivity implements View.OnClickListener {
 
     private ArrayList<ModelFirebase> modelFirebaseArrayList;
-    public MediaPlayer mediaPlayer;
-    private int currentPlayingPosition = -1; // Posición de la canción
-    // que se está reproduciendo actualmente
+    private MediaPlayer mediaPlayer;
+    private int currentPlayingPosition = -1; // Posición de la canción que se está reproduciendo actualmente
     private ImageButton playPauseButton, skipPreviousButton, skipNextButton, repeatOneButton;
     private ImageView albumCoverImageView;
     private ConstraintLayout backgroundLayout;
@@ -141,10 +139,12 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
                     tiempoRestanteTextView.setText(millisecondsToTimer(remainingDuration));
                 }
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 // No necesario para esta implementación
             }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // No necesario para esta implementación
@@ -152,6 +152,7 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
         });
         // Inicializar el Handler para actualizar el SeekBar
         handler = new Handler();
+
     }
 
     @Override
@@ -181,25 +182,48 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    // Método para actualizar la información de la canción según la URL recibida
+    private void updateSongInfo(String songUrl) {
+        // Buscar la canción correspondiente en modelFirebaseArrayList según la URL
+        for (int i = 0; i < modelFirebaseArrayList.size(); i++) {
+            if (modelFirebaseArrayList.get(i).getUrl().equals(songUrl)) {
+                // Obtener la canción encontrada
+                ModelFirebase currentSong = modelFirebaseArrayList.get(i);
+
+                // Actualizar la vista con la información de la canción
+                song.setText(currentSong.getSong()); // Establecer el nombre de la canción
+                artist.setText(currentSong.getArtist()); // Establecer el nombre del artista
+                loadAlbumCover(currentSong.getCover_image()); // Cargar la carátula del álbum
+
+                // Salir del bucle después de encontrar la canción
+                break;
+            }
+        }
+    }
+
+
+
+
     // Método para reproducir una canción
     private void playSong() {
-        if (currentPlayingPosition != -1 && currentPlayingPosition < modelFirebaseArrayList.size()) {
+        Intent intent = getIntent();
+        String songUrl = intent.getStringExtra("url"); // Obtener la URL de la canción desde el Intent
+
+        if (songUrl != null && !songUrl.isEmpty()) {
             try {
                 mediaPlayer.reset();
-                mediaPlayer.setDataSource(modelFirebaseArrayList.get(currentPlayingPosition).getUrl());
+                mediaPlayer.setDataSource(songUrl);
                 mediaPlayer.prepare();
                 mediaPlayer.start();
 
-                // Actualizar el estado de reproducción en el modelo y en la vista
-                modelFirebaseArrayList.get(currentPlayingPosition).setPlaying(true);
+                // Actualizar el estado de reproducción en la vista
                 updatePlayPauseButtonIcon(true);
 
-                // Cargar la carátula del álbum y cambiar el fondo
-                loadAlbumCover(modelFirebaseArrayList.get(currentPlayingPosition).getCover_image());
+                // Obtener información de la canción desde modelFirebaseArrayList
+                ModelFirebase currentSong = modelFirebaseArrayList.get(currentPlayingPosition);
 
-                // Actualizar los TextViews con el nombre de la canción y el artista
-                song.setText(modelFirebaseArrayList.get(currentPlayingPosition).getSong());
-                artist.setText(modelFirebaseArrayList.get(currentPlayingPosition).getArtist());
+                // Actualizar la vista con la información de la canción
+                updateSongInfo(songUrl);
 
                 // Configurar el máximo del SeekBar con la duración de la canción
                 seekBar.setMax(mediaPlayer.getDuration());
@@ -261,6 +285,8 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
         }
     };
 
+
+
     private String millisecondsToTimer(int milliseconds) {
         String finalTimerString = "";
         String secondsString;
@@ -290,6 +316,7 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             handler.removeCallbacks(updateSeekBar);
         }
     }
+
 
     // Método para actualizar el ícono del botón de reproducción
     private void updatePlayPauseButtonIcon(boolean isPlaying) {
@@ -367,6 +394,8 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+
+
     // Método para saltar a la siguiente canción
     private void skipToNextSong() {
         // Desactivar la repetición si está activada
@@ -374,15 +403,27 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             toggleRepeatOne();
         }
 
-        if (currentPlayingPosition < modelFirebaseArrayList.size() - 1) {
-            currentPlayingPosition++;
-            showLoadingSnackbarAndPlay(); // Mostrar Snackbar de carga y reproducir después
-        } else {
-            Toast.makeText(this, "No hay más canciones, reproduciendo desde el principio", Toast.LENGTH_SHORT).show();
-            currentPlayingPosition = 0; // Volver al principio
-            showLoadingSnackbarAndPlay(); // Mostrar Snackbar de carga y reproducir después
+        // Obtener la URL de la canción actualmente en reproducción
+        String currentSongUrl = modelFirebaseArrayList.get(currentPlayingPosition).getUrl();
+
+        // Buscar la siguiente canción en la lista basándose en la URL actual
+        for (int i = 0; i < modelFirebaseArrayList.size(); i++) {
+            if (modelFirebaseArrayList.get(i).getUrl().equals(currentSongUrl)) {
+                // Encontramos la posición actual en el arraylist
+                // Avanzamos una posición para obtener la siguiente canción
+                int nextPosition = (i + 1) % modelFirebaseArrayList.size(); // Ciclo de vuelta al principio si se alcanza el final
+                currentPlayingPosition = nextPosition;
+                showLoadingSnackbarAndPlay(); // Mostrar Snackbar de carga y reproducir después
+                return;
+            }
         }
+
+        Toast.makeText(this, "No se encontró la siguiente canción", Toast.LENGTH_SHORT).show();
     }
+
+
+
+
 
     // Método para mostrar el Snackbar de carga y reproducir después de un tiempo
     private void showLoadingSnackbarAndPlay() {
@@ -420,6 +461,7 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
                 if (!isRepeatOne && loadingSnackbar != null && loadingSnackbar.isShown()) {
                     loadingSnackbar.dismiss();
                 }
+
                 if (isRepeatOne) {
                     // Si está activada la repetición, reiniciar la canción actual
                     mediaPlayer.seekTo(0);
@@ -432,6 +474,8 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             }
         }, LOADING_DURATION); // LOADING_DURATION es el tiempo en milisegundos que defines, en este caso 3000 (3 segundos)
     }
+
+
 
     // Método para preparar la canción para reproducción sin iniciarla automáticamente
     private void prepareSong() {
