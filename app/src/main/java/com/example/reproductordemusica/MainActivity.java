@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements
     private FirebaseAdapter firebaseAdapter;
     private MediaPlayer mediaPlayer;
     private RecyclerView recyclerViewMain;
-    private RecyclerView recyclerViewFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

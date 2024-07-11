@@ -1,5 +1,7 @@
 package com.example.reproductordemusica;
+import com.example.reproductordemusica.MainActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -58,6 +60,21 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
         // Inicializar MediaPlayer
         mediaPlayer = new MediaPlayer();
 
+        findViewById(R.id.btn_show_list).setOnClickListener(this);
+
+        // Verificar si se reanuda la reproducción desde MainActivity
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("currentPosition")) {
+            currentPlayingPosition = intent.getIntExtra("currentPosition", -1);
+            boolean isPlaying = intent.getBooleanExtra("isPlaying", false);
+            if (currentPlayingPosition != -1) {
+                if (isPlaying) {
+                    playSong(); // Reanudar la canción si estaba reproduciéndose
+                } else {
+                    prepareSong(); // Preparar la canción si estaba pausada
+                }
+            }
+        }
 
 
         // Inicializar modelFirebaseArrayList
@@ -156,6 +173,12 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             skipToNextSong();
         } else if (id == R.id.repeat_one) {
             toggleRepeatOne(); // Método para manejar la repetición
+        }
+        else if (id == R.id.btn_show_list) {
+            Intent intent = new Intent(Reproductor.this, MainActivity.class);
+            intent.putExtra("currentPosition", currentPlayingPosition);
+            intent.putExtra("isPlaying", mediaPlayer.isPlaying());
+            startActivity(intent);
         }
     }
 
@@ -455,12 +478,17 @@ public class Reproductor extends AppCompatActivity implements View.OnClickListen
             Toast.makeText(this, "Repetición desactivada", Toast.LENGTH_SHORT).show();
         }
     }
-
+    private void stopMediaPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mediaPlayer.release();
-        // Detener el handler de actualización del SeekBar
-        handler.removeCallbacks(updateSeekBar);
+        mediaPlayer.release();  // Liberar MediaPlayer
+        handler.removeCallbacks(updateSeekBar);  // Detener el handler de actualización del SeekBar
     }
 }
